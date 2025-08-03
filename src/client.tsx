@@ -1,6 +1,8 @@
 import { useAgent } from "agents/react";
 import { useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import OAuthCallbackPage from "./OAuthCallbackPage";
 import "./styles.css";
 import type { MCPServersState } from "agents";
 import { agentFetch } from "agents/client";
@@ -35,11 +37,24 @@ function App() {
 	});
 
 	function openPopup(authUrl: string) {
-		window.open(
+		const popup = window.open(
 			authUrl,
 			"popupWindow",
 			"width=600,height=800,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes",
 		);
+		
+		// Listen for OAuth callback completion
+		const handleMessage = (event: MessageEvent) => {
+			if (event.origin !== window.location.origin) return;
+			if (event.data.type === 'oauth_complete') {
+				popup?.close();
+				window.removeEventListener('message', handleMessage);
+				// Refresh MCP servers to get updated auth status
+				window.location.reload();
+			}
+		};
+		
+		window.addEventListener('message', handleMessage);
 	}
 
 	const handleMcpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -158,4 +173,11 @@ function App() {
 }
 
 const root = createRoot(document.getElementById("root")!);
-root.render(<App />);
+root.render(
+	<BrowserRouter>
+		<Routes>
+			<Route path="/" element={<App />} />
+			<Route path="/oauth/callback" element={<OAuthCallbackPage />} />
+		</Routes>
+	</BrowserRouter>
+);
