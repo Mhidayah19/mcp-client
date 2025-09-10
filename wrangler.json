@@ -7,7 +7,7 @@
     "directory": "dist"
   },
   "vars": {
-    "HOST": "<PLACEHOLDER_HOST>"
+    "HOST": "https://mcp-client.mhidbml.workers.dev"
   },
   "durable_objects": {
     "bindings": [

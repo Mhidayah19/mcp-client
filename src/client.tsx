@@ -2,7 +2,6 @@ import { useAgent } from "agents/react";
 import { useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import OAuthCallbackPage from "./OAuthCallbackPage";
 import "./styles.css";
 import type { MCPServersState } from "agents";
 import { agentFetch } from "agents/client";
@@ -177,7 +176,6 @@ root.render(
 	<BrowserRouter>
 		<Routes>
 			<Route path="/" element={<App />} />
-			<Route path="/oauth/callback" element={<OAuthCallbackPage />} />
 		</Routes>
 	</BrowserRouter>
 );

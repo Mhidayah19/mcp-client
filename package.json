@@ -12,7 +12,7 @@
 	"author": "",
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "1.13.1",
-		"agents": "^0.0.100",
+		"agents": "https://pkg.pr.new/cloudflare/agents@445",
 		"nanoid": "^5.1.5",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
